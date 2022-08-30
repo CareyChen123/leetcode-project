@@ -32,3 +32,34 @@ bool isValid(char * s){
 
 }
 ```
+# 思路：c++,用map容器和stack容器。
+```c
+class Solution {
+public:
+    bool isValid(string s) {
+        int n=s.size();
+        if(n%2!=0)
+            return false;
+        map<char,char> pairs={
+            {')','('},
+            {'}','{'},
+            {']','['}
+        };
+        stack<char> stk;
+        for(char ch:s)
+        {
+            if(pairs.count(ch)) //查找是否含有ch键
+            {
+                if(stk.empty() || pairs[ch]!=stk.top())
+                    return false;
+                else{
+                    stk.pop();
+                }
+            }else{
+                stk.push(ch);
+            }
+        }
+        return stk.empty();
+    }
+};
+```
