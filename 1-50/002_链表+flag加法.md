@@ -141,4 +141,57 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
 
 }
 ```
+# c++ 时间复杂度：O(max(m,n))
+```c
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        vector<int> num1;
+        vector<int> num2;
+        int flag=0;
 
+        while(l1!=NULL)
+        {
+            num1.push_back(l1->val);
+            l1=l1->next;
+        }
+
+        while(l2!=NULL)
+        {
+            num2.push_back(l2->val);
+            l2=l2->next;
+        }
+
+        ListNode *head=new ListNode();
+        ListNode *tmp=head;
+
+        (num1.size()>num2.size()) ? num2.resize(num1.size(),0) : num1.resize(num2.size(),0);
+
+        for(int i=0; i<max(num1.size(),num2.size()); i++)
+        {
+            tmp->next=new ListNode();
+            tmp->next->val=(num1[i]+num2[i]+flag)%10;
+            flag=(num1[i]+num2[i]+flag)/10;
+            tmp=tmp->next;
+        }
+
+        if(flag>0)
+        {
+            tmp->next=new ListNode();
+            tmp->next->val=flag;
+        }
+
+        return head->next;
+    }
+};
+```
